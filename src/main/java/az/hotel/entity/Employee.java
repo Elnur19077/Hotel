@@ -1,7 +1,10 @@
 package az.hotel.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
@@ -13,6 +16,9 @@ import java.sql.Date;
 @Table(name = "EMPLOYEE")
 @Data
 @DynamicInsert
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Employee {
 
     @Id

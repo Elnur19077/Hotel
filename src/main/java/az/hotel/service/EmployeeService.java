@@ -11,4 +11,10 @@ import java.util.List;
 public interface EmployeeService {
     Response<List<EmployeeResp>> getAllemployee();
     public EmployeeResp convertToEmployeeResp(Employee employee);
+
+    Response<List<EmployeeResp>> getActiveemployees();
+
+    Response<List<EmployeeResp>> findByNameAndSurname(String name, String surname);
+
+    Response<EmployeeResp> createEmployee(Employee employee);
 }
