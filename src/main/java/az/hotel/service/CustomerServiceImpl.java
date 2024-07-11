@@ -135,9 +135,6 @@ public class CustomerServiceImpl implements CustomerService {
                surname(customer.getSurname()).
                fatherName(customer.getFatherName()).
                dob(customer.getDob()).
-
-
-
                build();
     }
 
