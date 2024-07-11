@@ -12,6 +12,6 @@ public class ReqCustomerAdd {
     private String email;
     private String address;
     private Date sysDate;
-    private CustomerResp customerResp;
+   private Long customerId;
     private  Integer activity;
 }

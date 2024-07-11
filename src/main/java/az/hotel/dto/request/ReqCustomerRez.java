@@ -10,6 +10,7 @@ public class ReqCustomerRez {
     private Long id;
     private Date enteryDate;
     private  Date exitDate;
+    private  Long customerId;
     private  String roomsType;
     private Integer numbersOfBed;
     private  Integer payment;

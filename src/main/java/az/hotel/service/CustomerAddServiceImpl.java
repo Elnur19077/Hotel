@@ -4,11 +4,13 @@ import az.hotel.dto.request.ReqCustomerAdd;
 import az.hotel.dto.response.CustomerAddResp;
 import az.hotel.dto.response.RespStatus;
 import az.hotel.dto.response.Response;
+import az.hotel.entity.Customer;
 import az.hotel.entity.CustomerAdditionalInfo;
 import az.hotel.enums.EnumAvailableStatus;
 import az.hotel.exception.CustomerException;
 import az.hotel.exception.ExceptionConstant;
 import az.hotel.repository.CustomerAddRepository;
+import az.hotel.repository.CustomerRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import java.util.List;
 @Transactional
 public class CustomerAddServiceImpl implements CustomerAddService {
    private final CustomerAddRepository customerAddRepository;
+   private final CustomerRepository customerRepository;
 
 @Override
     public Response<List<CustomerAddResp>> getAllCustomerAdditionalInfo() {
@@ -105,10 +108,16 @@ CustomerAdditionalInfo customerAdditionalInfo = customerAddRepository.findByIdAn
             if (telNumber == null) {
                 throw new CustomerException("Customer telNumber is null", ExceptionConstant.CUSTOMER_NOT_FOUND);
             }
+            Customer customer=customerRepository.findByIdAndActivity(reqCustomerAdd.getCustomerId(),EnumAvailableStatus.ACTIVE.getValue());
+            if (customer == null) {
+                throw new CustomerException("Customer not found", ExceptionConstant.CUSTOMER_NOT_FOUND);
+            }
             CustomerAdditionalInfo customerAdditionalInfo = CustomerAdditionalInfo.builder().
                     telNumber(telNumber).
                     email(reqCustomerAdd.getEmail()).
                     address(reqCustomerAdd.getAddress()).
+                    customer(customer).
+
 
                     build();
             customerAddRepository.save(customerAdditionalInfo);

@@ -12,4 +12,5 @@ import java.util.List;
 public interface CustomerRepository extends JpaRepository<Customer,Integer> {
     List<Customer> getCustomersByActivity(Integer activity);
 
+    Customer findByIdAndActivity(Long ID,Integer activity);
 }

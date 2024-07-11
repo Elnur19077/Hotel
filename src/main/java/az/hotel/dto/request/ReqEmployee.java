@@ -3,7 +3,6 @@ package az.hotel.dto.request;
 import lombok.Data;
 
 import java.sql.Date;
-
 @Data
 public class ReqEmployee {
     private Long id;
@@ -13,4 +12,5 @@ public class ReqEmployee {
     private  byte[] photo;
     private Date sysDate;
     private  Integer avtivity;
+
 }

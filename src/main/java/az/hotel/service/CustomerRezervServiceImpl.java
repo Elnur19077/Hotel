@@ -4,10 +4,12 @@ import az.hotel.dto.request.ReqCustomerRez;
 import az.hotel.dto.response.CustomerRezResp;
 import az.hotel.dto.response.RespStatus;
 import az.hotel.dto.response.Response;
+import az.hotel.entity.Customer;
 import az.hotel.entity.CustomerRezervInfo;
 import az.hotel.enums.EnumAvailableStatus;
 import az.hotel.exception.CustomerException;
 import az.hotel.exception.ExceptionConstant;
+import az.hotel.repository.CustomerRepository;
 import az.hotel.repository.CustomerRezRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import java.util.Optional;
 @Transactional
 public class CustomerRezervServiceImpl implements CustomerRezervService {
     private final CustomerRezRepository customerRezRepository;
+    private final CustomerRepository customerRepository;
 
     @Override
     public Response<List<CustomerRezResp>> getAllRezervInfo() {
@@ -110,12 +113,14 @@ public class CustomerRezervServiceImpl implements CustomerRezervService {
             } else if (enretyDate.after(exitDate)) {
                 throw new CustomerException("Entery Date is after exitDate", ExceptionConstant.INVALID_REQUEST_DATA);
             }
+            Customer customer=customerRepository.findByIdAndActivity(reqCustomerRez.getId(),EnumAvailableStatus.ACTIVE.getValue());
             CustomerRezervInfo customerRezResp = CustomerRezervInfo.builder().
                     enteryDate((java.sql.Date) enretyDate).
                     exitDate((java.sql.Date) exitDate).
                     numbersOfBed(reqCustomerRez.getNumbersOfBed()).
                     payment(reqCustomerRez.getPayment()).
                     roomsType(reqCustomerRez.getRoomsType()).
+                    customer(customer).
                     build();
             customerRezRepository.save(customerRezResp);
             CustomerRezResp customerRezResp1 = convertCustomerRez(customerRezResp);

@@ -19,15 +19,15 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_seq")
     @SequenceGenerator(name = "employee_seq", sequenceName = "Employee_SEQ", allocationSize = 1)
     private Long id;
-    private  String name;
+    private String name;
     private String surname;
     @Column(name = "FATHER_NAME")
     private String fatherName;
-    @Column(name = "photo", columnDefinition="BLOB")
-private  byte[] photo;
-@CreationTimestamp
-@Column(name = "SYS_DATE")
-private Date sysDate;
+    @Column(name = "photo", columnDefinition = "BLOB")
+    private byte[] photo;
+    @CreationTimestamp
+    @Column(name = "SYS_DATE")
+    private Date sysDate;
     @ColumnDefault(value = "1")
-private  Integer avtivity;
+    private Integer avtivity;
 }
