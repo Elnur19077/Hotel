@@ -1,5 +1,6 @@
 package az.hotel.service;
 
+import az.hotel.dto.request.ReqEmployee;
 import az.hotel.dto.response.EmployeeResp;
 import az.hotel.dto.response.Response;
 import az.hotel.entity.Employee;
@@ -16,5 +17,9 @@ public interface EmployeeService {
 
     Response<List<EmployeeResp>> findByNameAndSurname(String name, String surname);
 
-    Response<EmployeeResp> createEmployee(Employee employee);
+    Response<EmployeeResp> createEmployee(ReqEmployee reqEmployee);
+
+    Response<EmployeeResp> uptadeEmployee(ReqEmployee reqEmployee);
+
+    Response<EmployeeResp> deleteEmploye(Long id);
 }

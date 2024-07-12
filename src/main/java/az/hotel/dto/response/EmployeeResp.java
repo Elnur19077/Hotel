@@ -15,5 +15,5 @@ public class EmployeeResp {
     private String fatherName;
     private  byte[] photo;
     private Date sysDate;
-    private  Integer avtivity;
+    private  Integer activity;
 }

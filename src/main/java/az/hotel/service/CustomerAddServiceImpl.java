@@ -108,7 +108,7 @@ CustomerAdditionalInfo customerAdditionalInfo = customerAddRepository.findByIdAn
             if (telNumber == null) {
                 throw new CustomerException("Customer telNumber is null", ExceptionConstant.CUSTOMER_NOT_FOUND);
             }
-            Customer customer=customerRepository.findByIdAndActivity(reqCustomerAdd.getCustomerId(),EnumAvailableStatus.ACTIVE.getValue());
+            Customer customer=customerRepository.findCustomerByIdAndActivity(reqCustomerAdd.getCustomerId(),EnumAvailableStatus.ACTIVE.getValue());
             if (customer == null) {
                 throw new CustomerException("Customer not found", ExceptionConstant.CUSTOMER_NOT_FOUND);
             }

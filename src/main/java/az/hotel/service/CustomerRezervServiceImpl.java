@@ -113,7 +113,7 @@ public class CustomerRezervServiceImpl implements CustomerRezervService {
             } else if (enretyDate.after(exitDate)) {
                 throw new CustomerException("Entery Date is after exitDate", ExceptionConstant.INVALID_REQUEST_DATA);
             }
-            Customer customer=customerRepository.findByIdAndActivity(reqCustomerRez.getId(),EnumAvailableStatus.ACTIVE.getValue());
+            Customer customer=customerRepository.findCustomerByIdAndActivity(reqCustomerRez.getId(),EnumAvailableStatus.ACTIVE.getValue());
             CustomerRezervInfo customerRezResp = CustomerRezervInfo.builder().
                     enteryDate((java.sql.Date) enretyDate).
                     exitDate((java.sql.Date) exitDate).

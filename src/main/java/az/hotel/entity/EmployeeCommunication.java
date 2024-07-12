@@ -12,24 +12,25 @@ import org.hibernate.annotations.DynamicInsert;
 import java.sql.Date;
 
 @Entity
-@Table(name = "EMPLOYEE")
+@Table(name = "EMPLOYEE_COMMUNICATION")
 @Data
 @DynamicInsert
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Employee {
+public class EmployeeCommunication {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_seq")
-    @SequenceGenerator(name = "employee_seq", sequenceName = "Employee_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employeecom_seq")
+    @SequenceGenerator(name = "employeecom_seq", sequenceName = "EMPLOYEE_COM_SEQ", allocationSize = 1)
     private Long id;
-    private String name;
-    private String surname;
-    @Column(name = "FATHER_NAME")
-    private String fatherName;
-    @Column(name = "photo", columnDefinition = "BLOB")
-    private byte[] photo;
+    @Column(name = "TEL_NUMBER")
+    private Integer telNumber;
+    private String email;
+    private String address;
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
     @CreationTimestamp
     @Column(name = "SYS_DATE")
     private Date sysDate;
