@@ -2,7 +2,10 @@ package az.hotel.entity;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -12,7 +15,9 @@ import java.sql.Date;
 @Table(name = "CUSTOMER")
 @Data
 @DynamicInsert
-
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_seq")

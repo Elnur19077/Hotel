@@ -2,6 +2,7 @@ package az.hotel.service;
 
 import az.hotel.dto.request.ReqCustomerAdd;
 import az.hotel.dto.response.CustomerAddResp;
+import az.hotel.dto.response.CustomerResp;
 import az.hotel.dto.response.RespStatus;
 import az.hotel.dto.response.Response;
 import az.hotel.entity.Customer;
@@ -21,14 +22,14 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class CustomerAddServiceImpl implements CustomerAddService {
-   private final CustomerAddRepository customerAddRepository;
-   private final CustomerRepository customerRepository;
+    private final CustomerAddRepository customerAddRepository;
+    private final CustomerRepository customerRepository;
 
-@Override
+    @Override
     public Response<List<CustomerAddResp>> getAllCustomerAdditionalInfo() {
         Response<List<CustomerAddResp>> response = new Response<>();
         try {
-          List<CustomerAdditionalInfo> customers = (List<CustomerAdditionalInfo>) customerAddRepository.findAll();
+            List<CustomerAdditionalInfo> customers = (List<CustomerAdditionalInfo>) customerAddRepository.findAll();
             if (customers.isEmpty()) {
                 throw new CustomerException("Customer not found", ExceptionConstant.CUSTOMER_NOT_FOUND);
             }
@@ -45,25 +46,29 @@ public class CustomerAddServiceImpl implements CustomerAddService {
         return response;
     }
 
-@Override
+    @Override
     public CustomerAddResp convertCustomerAdditionalInfo(CustomerAdditionalInfo customerAdditionalInfo) {
+        CustomerResp customerResp = CustomerResp.builder()
+                .name(customerAdditionalInfo.getCustomer().getName())
+                .surname(customerAdditionalInfo.getCustomer().getSurname())
+                .build();
         return CustomerAddResp.builder().
                 id(customerAdditionalInfo.getId()).
                 telNumber(customerAdditionalInfo.getTelNumber()).
                 email(customerAdditionalInfo.getEmail()).
                 address(customerAdditionalInfo.getAddress()).
-                sysDate(customerAdditionalInfo.getSysDate()).
-                activity(customerAdditionalInfo.getActivity()).
+                customerResp(customerResp).
                 build();
     }
-@Override
+
+    @Override
     public Response<CustomerAddResp> getById(Long id) {
         Response<CustomerAddResp> response = new Response<>();
         try {
             if (id == null) {
                 throw new CustomerException("Customer ID is null", ExceptionConstant.CUSTOMER_NOT_FOUND);
             }
-CustomerAdditionalInfo customerAdditionalInfo = customerAddRepository.findByIdAndActivity(id, EnumAvailableStatus.ACTIVE.getValue());
+            CustomerAdditionalInfo customerAdditionalInfo = customerAddRepository.findByIdAndActivity(id, EnumAvailableStatus.ACTIVE.getValue());
             if (customerAdditionalInfo == null) {
                 throw new CustomerException("Customer not found", ExceptionConstant.CUSTOMER_NOT_FOUND);
             }
@@ -79,7 +84,8 @@ CustomerAdditionalInfo customerAdditionalInfo = customerAddRepository.findByIdAn
         }
         return response;
     }
-@Override
+
+    @Override
     public Response<List<CustomerAddResp>> getAllActiveCustomerAdditionalInfo() {
         Response<List<CustomerAddResp>> response = new Response<>();
         try {
@@ -99,7 +105,8 @@ CustomerAdditionalInfo customerAdditionalInfo = customerAddRepository.findByIdAn
         }
         return response;
     }
-@Override
+
+    @Override
     public Response<CustomerAddResp> addCustomerAdditionalInfo(ReqCustomerAdd reqCustomerAdd) {
         Response<CustomerAddResp> response = new Response<>();
 
@@ -108,7 +115,7 @@ CustomerAdditionalInfo customerAdditionalInfo = customerAddRepository.findByIdAn
             if (telNumber == null) {
                 throw new CustomerException("Customer telNumber is null", ExceptionConstant.CUSTOMER_NOT_FOUND);
             }
-            Customer customer=customerRepository.findCustomerByIdAndActivity(reqCustomerAdd.getCustomerId(),EnumAvailableStatus.ACTIVE.getValue());
+            Customer customer = customerRepository.findCustomerByIdAndActivity(reqCustomerAdd.getCustomerId(), EnumAvailableStatus.ACTIVE.getValue());
             if (customer == null) {
                 throw new CustomerException("Customer not found", ExceptionConstant.CUSTOMER_NOT_FOUND);
             }
@@ -134,7 +141,7 @@ CustomerAdditionalInfo customerAdditionalInfo = customerAddRepository.findByIdAn
         return response;
     }
 
-@Override
+    @Override
     public Response<CustomerAddResp> updateCustomerAdditionalInfo(ReqCustomerAdd reqCustomerAdd) {
         Response<CustomerAddResp> response = new Response<>();
         try {
@@ -163,7 +170,8 @@ CustomerAdditionalInfo customerAdditionalInfo = customerAddRepository.findByIdAn
         }
         return response;
     }
-@Override
+
+    @Override
     public Response deleteCustomerAdditionalInfo(Long id) {
         Response response = new Response<>();
         try {
@@ -187,6 +195,7 @@ CustomerAdditionalInfo customerAdditionalInfo = customerAddRepository.findByIdAn
         }
         return response;
     }
+
     @Override
     public Response<List<CustomerAdditionalInfo>> getCustomerAdditionalInfoByCustomerName(String name) {
         Response<List<CustomerAdditionalInfo>> response = new Response<>();

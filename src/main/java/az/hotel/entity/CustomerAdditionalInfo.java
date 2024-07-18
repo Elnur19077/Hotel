@@ -28,7 +28,6 @@ public class CustomerAdditionalInfo {
     private String address;
     @CreationTimestamp
     private Date sysDate;
-
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;

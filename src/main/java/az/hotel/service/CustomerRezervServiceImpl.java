@@ -1,28 +1,33 @@
 package az.hotel.service;
 
 import az.hotel.dto.request.ReqCustomerRez;
-import az.hotel.dto.response.CustomerRezResp;
-import az.hotel.dto.response.RespStatus;
-import az.hotel.dto.response.Response;
+import az.hotel.dto.response.*;
 import az.hotel.entity.Customer;
 import az.hotel.entity.CustomerRezervInfo;
+import az.hotel.entity.Rooms;
 import az.hotel.enums.EnumAvailableStatus;
+import az.hotel.enums.EnumRoomsAvaibility;
 import az.hotel.exception.CustomerException;
 import az.hotel.exception.ExceptionConstant;
+import az.hotel.exception.RoomsExpection;
 import az.hotel.repository.CustomerRepository;
 import az.hotel.repository.CustomerRezRepository;
+import az.hotel.repository.RoomsRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class CustomerRezervServiceImpl implements CustomerRezervService {
     private final CustomerRezRepository customerRezRepository;
     private final CustomerRepository customerRepository;
+    private final RoomsRepository roomsRepository;
 
     @Override
     public Response<List<CustomerRezResp>> getAllRezervInfo() {
@@ -31,7 +36,6 @@ public class CustomerRezervServiceImpl implements CustomerRezervService {
             List<CustomerRezervInfo> customers = customerRezRepository.findAll();
             if (customers.isEmpty()) {
                 throw new CustomerException("Customer not found", ExceptionConstant.CUSTOMER_NOT_FOUND);
-
             }
             List<CustomerRezResp> customerResps = customers.stream().map(this::convertCustomerRez).toList();
             response.setT(customerResps);
@@ -48,13 +52,28 @@ public class CustomerRezervServiceImpl implements CustomerRezervService {
 
     @Override
     public CustomerRezResp convertCustomerRez(CustomerRezervInfo customerRezervInfo) {
+        RoomsResp roomsResp = RoomsResp.builder()
+                .priceForDay(customerRezervInfo.getRooms().getPriceForDay())
+                .numberOfBed(customerRezervInfo.getRooms().getNumberOfBed())
+                .roomsType(customerRezervInfo.getRooms().getRoomsType())
+                .build();
+        CustomerResp customerResp = CustomerResp.builder()
+                .name(customerRezervInfo.getCustomer().getName())
+                .surname(customerRezervInfo.getCustomer().getSurname())
+                .build();
+
+
         return CustomerRezResp.builder().
                 id(customerRezervInfo.getId()).
                 enteryDate(customerRezervInfo.getEnteryDate()).
                 exitDate(customerRezervInfo.getExitDate()).
                 numbersOfBed(customerRezervInfo.getNumbersOfBed()).
                 payment(customerRezervInfo.getPayment()).
-                roomsType(customerRezervInfo.getRoomsType()).
+                roomsType(customerRezervInfo.getRoomsType())
+                .roomsResp(roomsResp).
+                customerResp(customerResp).
+
+
                 build();
     }
 
@@ -113,13 +132,21 @@ public class CustomerRezervServiceImpl implements CustomerRezervService {
             } else if (enretyDate.after(exitDate)) {
                 throw new CustomerException("Entery Date is after exitDate", ExceptionConstant.INVALID_REQUEST_DATA);
             }
-            Customer customer=customerRepository.findCustomerByIdAndActivity(reqCustomerRez.getId(),EnumAvailableStatus.ACTIVE.getValue());
+            Rooms rooms = roomsRepository.findRoomsByIdAndAvaible(reqCustomerRez.getRoomsId(), EnumRoomsAvaibility.IS_AVAIBLE.getValue());
+            if (rooms == null) {
+                throw new RoomsExpection("No rooms found", ExceptionConstant.NO_ROOMS_DETAILS);
+            }
+            Customer customer = customerRepository.findCustomerByIdAndActivity(reqCustomerRez.getId(), EnumAvailableStatus.ACTIVE.getValue());
+            if (customer == null) {
+                throw new CustomerException("No customer found", ExceptionConstant.CUSTOMER_NOT_FOUND);
+            }
             CustomerRezervInfo customerRezResp = CustomerRezervInfo.builder().
                     enteryDate((java.sql.Date) enretyDate).
                     exitDate((java.sql.Date) exitDate).
                     numbersOfBed(reqCustomerRez.getNumbersOfBed()).
                     payment(reqCustomerRez.getPayment()).
-                    roomsType(reqCustomerRez.getRoomsType()).
+                    roomsType(reqCustomerRez.getRoomsType())
+                    .rooms(rooms).
                     customer(customer).
                     build();
             customerRezRepository.save(customerRezResp);
@@ -170,13 +197,13 @@ public class CustomerRezervServiceImpl implements CustomerRezervService {
 
     @Override
     public Response deleteRez(Long id) {
-        Response response=new Response<>();
+        Response response = new Response<>();
         try {
             if (id == null) {
                 throw new CustomerException("Invalid data ", ExceptionConstant.INVALID_REQUEST_DATA);
             }
-           CustomerRezervInfo customerRezervInfo= customerRezRepository.findAllByIdAndActivity(id, EnumAvailableStatus.ACTIVE.getValue());
-            if (customerRezervInfo==null) {
+            CustomerRezervInfo customerRezervInfo = customerRezRepository.findAllByIdAndActivity(id, EnumAvailableStatus.ACTIVE.getValue());
+            if (customerRezervInfo == null) {
                 throw new CustomerException("Customer  not found", ExceptionConstant.CUSTOMER_NOT_FOUND);
 
             }
@@ -184,7 +211,7 @@ public class CustomerRezervServiceImpl implements CustomerRezervService {
             customerRezRepository.save(customerRezervInfo);
             response.setT(customerRezervInfo);
             response.setStatus(RespStatus.getSuccessMessage());
-        }catch (CustomerException ex) {
+        } catch (CustomerException ex) {
             ex.printStackTrace();
             response.setStatus(new RespStatus(ex.getCode(), ex.getMessage()));
         } catch (Exception ex) {

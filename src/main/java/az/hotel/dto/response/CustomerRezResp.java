@@ -20,6 +20,7 @@ public class CustomerRezResp {
     private  String roomsType;
     private Integer numbersOfBed;
     private  Integer payment;
-    private Date sysDate;
-    private  Integer activity;
+    private  CustomerResp customerResp;
+    private  RoomsResp roomsResp;
+
 }

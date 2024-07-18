@@ -31,7 +31,10 @@ public class CustomerRezervInfo {
     private  Integer payment;
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private Customer customer;
+   private Customer customer;
+    @ManyToOne
+    @JoinColumn(name = "rooms_id")
+    private Rooms rooms;
     @CreationTimestamp
     @Column(name = "SYS_DATE")
     private Date sysDate;

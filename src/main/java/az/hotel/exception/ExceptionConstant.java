@@ -11,4 +11,5 @@ public final class ExceptionConstant {
     public static final Integer CUSTOMER_NOT_FOUND = 102;
     public static final Integer NO_OTEL_INFO = 103;
     public static final Integer EMPLOYEE_NOT_FOUND = 104;
+    public static final Integer NO_ROOMS_DETAILS = 105;
 }

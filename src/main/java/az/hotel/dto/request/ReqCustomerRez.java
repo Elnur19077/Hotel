@@ -9,6 +9,7 @@ public class ReqCustomerRez {
 
     private Long id;
     private Date enteryDate;
+    private  Long roomsId;
     private  Date exitDate;
     private  Long customerId;
     private  String roomsType;
