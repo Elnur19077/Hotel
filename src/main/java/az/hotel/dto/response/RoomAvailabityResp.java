@@ -18,13 +18,10 @@ import java.util.Date;
 @NoArgsConstructor
 public class RoomAvailabityResp {
     private Long id;
-
     private Date startDate;
-
     private Date endDate;
-   private  RoomsResp roomsResp;
-   private  CustomerResp customerResp;
-    private    Integer availabity;
+    private RoomsResp roomsResp;
+    private Integer availabity;
 }
 
 

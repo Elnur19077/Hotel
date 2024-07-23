@@ -14,7 +14,7 @@ import java.sql.Date;
 @NoArgsConstructor
 
 public class CustomerResp {
-    private Long id;
+
     private String name;
     private String surname;
     private String fatherName;

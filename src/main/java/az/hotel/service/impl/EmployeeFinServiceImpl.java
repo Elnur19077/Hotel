@@ -1,4 +1,4 @@
-package az.hotel.service;
+package az.hotel.service.impl;
 
 import az.hotel.dto.request.ReqEmployeeFin;
 import az.hotel.dto.response.EmployeeFinResp;
@@ -12,6 +12,7 @@ import az.hotel.exception.CustomerException;
 import az.hotel.exception.ExceptionConstant;
 import az.hotel.repository.EmployeeFinRepository;
 import az.hotel.repository.EmployeeRepository;
+import az.hotel.service.EmployeeFinService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 @Transactional
-public class EmployeeFinServiceImpl implements EmployeeFinService{
+public class EmployeeFinServiceImpl implements EmployeeFinService {
     private  final EmployeeFinRepository employeeFinRepository;
     private final EmployeeRepository employeeRepository;
 

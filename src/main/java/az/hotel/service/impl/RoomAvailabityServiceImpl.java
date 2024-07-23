@@ -1,4 +1,4 @@
-package az.hotel.service;
+package az.hotel.service.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

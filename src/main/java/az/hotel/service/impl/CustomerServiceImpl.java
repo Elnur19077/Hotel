@@ -1,15 +1,14 @@
-package az.hotel.service;
+package az.hotel.service.impl;
 
 import az.hotel.dto.response.CustomerResp;
 import az.hotel.dto.response.RespStatus;
 import az.hotel.dto.response.Response;
 import az.hotel.entity.Customer;
-import az.hotel.entity.CustomerAdditionalInfo;
-import az.hotel.enums.EnumAvailableStatus;
 import az.hotel.exception.CustomerException;
 import az.hotel.exception.ExceptionConstant;
 import az.hotel.repository.CustomerAddRepository;
 import az.hotel.repository.CustomerRepository;
+import az.hotel.service.CustomerService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -73,7 +72,7 @@ public class CustomerServiceImpl implements CustomerService {
             if (customerOptional.isPresent()) {
                 Customer customer = customerOptional.get();
                 CustomerResp customerResp = new CustomerResp();
-                customerResp.setId(customer.getId());
+
                 customerResp.setName(customer.getName());
                 customerResp.setSurname(customer.getSurname());
                 customerResp.setFatherName(customer.getFatherName());
@@ -130,7 +129,6 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerResp convertCustomer(Customer customer) {
        return CustomerResp.builder().
-               id(customer.getId()).
                name(customer.getName()).
                surname(customer.getSurname()).
                fatherName(customer.getFatherName()).

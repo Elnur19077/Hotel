@@ -1,12 +1,10 @@
 package az.hotel.dto.request;
 
-import az.hotel.dto.response.CustomerResp;
-import az.hotel.dto.response.PaymentMethodResp;
-import az.hotel.dto.response.RoomsResp;
 import lombok.Data;
 
 @Data
-public class ReqPaymentMethod {
+public class ReqRoomFinance {
+    private  Long id;
     private Long roomsId;
     private Long customerId;
     private Long paymentMethodId;

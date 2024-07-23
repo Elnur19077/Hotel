@@ -16,7 +16,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoomAvailabity {
+public class RoomAvailability {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rooms_av_seq")
     @SequenceGenerator(name = "rooms_av_seq", sequenceName = "ROOMS_AV_SEQ", allocationSize = 1)
@@ -28,9 +28,7 @@ public class RoomAvailabity {
     @ManyToOne
     @JoinColumn(name = "rooms_id")
     private  Rooms rooms;
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private  Customer customers;
-    @Column(columnDefinition = "1")
-    private    Integer availabity;
+
+
+    private    Integer availability;
 }

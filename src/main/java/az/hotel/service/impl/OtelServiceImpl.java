@@ -1,4 +1,4 @@
-package az.hotel.service;
+package az.hotel.service.impl;
 
 import az.hotel.dto.response.OtelResp;
 import az.hotel.dto.response.RespStatus;
@@ -7,6 +7,7 @@ import az.hotel.entity.OtelInfo;
 import az.hotel.exception.CustomerException;
 import az.hotel.exception.ExceptionConstant;
 import az.hotel.repository.OtelRepository;
+import az.hotel.service.OtelService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

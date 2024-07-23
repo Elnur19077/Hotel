@@ -1,4 +1,4 @@
-package az.hotel.service;
+package az.hotel.service.impl;
 
 import az.hotel.dto.request.ReqCustomerAdd;
 import az.hotel.dto.response.CustomerAddResp;
@@ -12,6 +12,7 @@ import az.hotel.exception.CustomerException;
 import az.hotel.exception.ExceptionConstant;
 import az.hotel.repository.CustomerAddRepository;
 import az.hotel.repository.CustomerRepository;
+import az.hotel.service.CustomerAddService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

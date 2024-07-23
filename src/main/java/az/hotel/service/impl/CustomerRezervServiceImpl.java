@@ -1,4 +1,4 @@
-package az.hotel.service;
+package az.hotel.service.impl;
 
 import az.hotel.dto.request.ReqCustomerRez;
 import az.hotel.dto.response.*;
@@ -13,6 +13,7 @@ import az.hotel.exception.RoomsExpection;
 import az.hotel.repository.CustomerRepository;
 import az.hotel.repository.CustomerRezRepository;
 import az.hotel.repository.RoomsRepository;
+import az.hotel.service.CustomerRezervService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

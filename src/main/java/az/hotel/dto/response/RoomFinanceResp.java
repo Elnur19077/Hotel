@@ -7,15 +7,16 @@ import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-
+@Builder
 @NoArgsConstructor
 public class RoomFinanceResp {
-    private Long id;
+
     private  RoomsResp roomsResp;
     private  CustomerResp customerResp;
     private  PaymentMethodResp paymentMethodResp;
